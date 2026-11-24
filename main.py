@@ -35,9 +35,17 @@ def output_path() -> str:
 
 
 def main() -> int:
+    if not (1 <= len(WORD) <= 24) or not WORD.strip():
+        print("entry word must be 1 to 24 non-blank characters", file=sys.stderr)
+        return 1
     path = output_path()
     with open(path, "w", encoding="utf-8") as handle:
         handle.write(WORD)
+    with open(path, "r", encoding="utf-8") as handle:
+        written = handle.read()
+    if written != WORD:
+        print(f"wrote {written!r}, expected {WORD!r}", file=sys.stderr)
+        return 1
     print(WORD)
     return 0
 
